@@ -1,0 +1,14 @@
+.claude/
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Non-production docs
+faq.md
+form-options.md
+hosting-options.md
+whatsapp styling.rtf
+CLAUDE.md
