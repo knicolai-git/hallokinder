@@ -72,7 +72,7 @@
     </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: clip; }
         body {
             background: #eeeee4;
             font-family: 'Bricolage Grotesque', system-ui, sans-serif;
@@ -1229,37 +1229,57 @@
 
         /* ===== MOBILE + TABLET ===== */
         @media (max-width: 900px) {
-            .hero { min-height: auto; justify-content: flex-start; padding: 160px 40px 120px; gap: 40px; }
-            .hero-title { font-size: clamp(40px, 14vw, 180px); }
+            /* 1. Hero bar — stack into two rows */
+            .hero-bar { flex-wrap: wrap; gap: 12px; }
+            .top-nav { flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+            .mitmachen-btn { order: 1; }
+            .loc-area { min-width: 10ch; display: inline-block; }
+
+            /* 2. Hero title — larger on mobile, more padding */
+            .hero { min-height: auto; justify-content: flex-start; padding: 180px 40px 140px; gap: 40px; }
+            .hero-title { font-size: clamp(56px, 18vw, 180px); }
             .mobile-br { display: initial; }
             .hero-description { font-size: 19px; }
+
             .grid-section { padding: 0 16px; margin-top: 96px; }
             .grid-columns { flex-direction: column; }
             .grid-columns .col { display: contents; }
             .card { padding: 56px 36px; border-radius: 32px; }
             .community-card { padding: 32px 16px 0; border-radius: 32px; gap: 16px; }
             .community-card-inner { padding: 0 16px; }
-            .wa-chat-wrap { padding: 48px 0 80px; }
+
+            /* 8. Horizontal scroll fix — clip chat cards */
+            .wa-chat-wrap { padding: 48px 0 80px; overflow: hidden; }
             #chatCardGroup1 { margin-left: -15px; }
             #chatCardGroup2 { margin-left: -35px; }
             #chatCardGroup3 { margin-left: -30px; margin-right: -15px; }
+
+            /* 7. Footer — stack vertically */
             .footer-wrap { padding: 24px 20px 40px; }
-            footer { gap: 12px; }
+            footer { gap: 12px; flex-direction: column; align-items: center; text-align: center; }
+            #footerYear { position: static; transform: none; order: 2; }
+            .footer-nick { order: 1; }
+
             .room-video-wrap { width: 100%; aspect-ratio: 1; order: 6; }
             .closing-tagline { padding: 120px 24px; white-space: normal; font-size: clamp(64px, 14vw, 100px); }
-            .section-heading { font-size: clamp(48px, 10vw, 72px); }
+
+            /* 5. Section headings — slightly smaller */
+            .section-heading { font-size: clamp(44px, 9vw, 68px); }
             .activity-text { font-size: clamp(19px, 4vw, 22px); }
-            .faq-question { padding: 22px 40px; font-size: 18px; }
-            .faq-answer-inner { padding: 0 40px 22px; font-size: 17px; }
+
+            /* 6. FAQ — reduce inner padding */
+            .faq-question { padding: 22px 28px; font-size: 18px; }
+            .faq-answer-inner { padding: 0 28px 22px; font-size: 17px; }
 
             /* Mobile card order: location → timeline → community → faq → contact */
-            .location-card  { order: 1; overflow: visible; padding: 32px 32px 40px; display: flex; flex-direction: column; z-index: 2; }
+            .location-card  { order: 1; overflow: visible; padding: 32px 32px 32px; display: flex; flex-direction: column; z-index: 2; }
             .location-photo-wrap { order: -1; }
             .contact-subtitle { font-size: 19px; }
-            .community-card h2 { font-size: clamp(48px, 10vw, 72px); }
+            .community-card h2 { font-size: clamp(44px, 9vw, 68px); }
             .community-card p { font-size: 19px; }
             .maps-btn, .cal-btn { width: 100%; padding: 16px 24px; font-size: 20px; }
-            .location-btns { flex-direction: column; margin-top: 24px; }
+            /* 4. Maps button — more margin-top, less card bottom padding */
+            .location-btns { flex-direction: column; margin-top: 32px; }
             .submit-btn { width: 100%; padding: 16px 24px; font-size: 20px; align-self: stretch; box-sizing: border-box; }
             .timeline-card  { order: 2; margin-top: 0; }
             .community-card { order: 3; }
@@ -1282,10 +1302,10 @@
                 aspect-ratio: 450 / 370;
             }
             .location-stamp { display: none; }
-            /* Postcard text: 80% of desktop sizes */
-            .location-text-east   { font-size: 50px; -webkit-text-stroke: 10px #fff; }
-            .location-text-london { font-size: 75px; -webkit-text-stroke: 10px #fff; }
-            .location-text-hallo  { font-size: 37px; -webkit-text-stroke: 10px #fff; }
+            /* 3. Postcard text — reduced ~20% */
+            .location-text-east   { font-size: 40px; -webkit-text-stroke: 10px #fff; }
+            .location-text-london { font-size: 60px; -webkit-text-stroke: 10px #fff; }
+            .location-text-hallo  { font-size: 30px; -webkit-text-stroke: 10px #fff; }
             /* Room video: spacing + size on mobile */
             .room-video-wrap { width: 85%; margin: 72px auto 0; }
         }
@@ -1351,7 +1371,7 @@
         <div class="card location-card fade-up">
             <div class="location-photo-wrap">
                 <div class="location-photo-frame">
-                    <video class="location-video" autoplay muted playsinline loading="lazy" preload="metadata" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='450' height='370'%3E%3Crect fill='%23dee0e2' width='450' height='370'/%3E%3C/svg%3E">
+                    <video class="location-video" autoplay muted playsinline preload="auto" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='450' height='370'%3E%3Crect fill='%23dee0e2' width='450' height='370'/%3E%3C/svg%3E">
                         <source src="Video_Generation_Without_Sound.mp4" type="video/mp4">
                     </video>
                     <p class="location-text-hallo">Hallo! from</p>
