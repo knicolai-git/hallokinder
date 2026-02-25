@@ -110,6 +110,11 @@
             transition: opacity 0.35s ease;
         }
         .loc-area.fading { opacity: 0; }
+        .loc-area::after {
+            transform-origin: left;
+            transition: transform 0.4s ease-out;
+        }
+        .loc-area.fading::after { transform: scaleX(0); }
 
         .loc-london {
             display: inline-block;
@@ -1231,13 +1236,14 @@
         @media (max-width: 900px) {
             /* 1. Hero bar — location left, nav stacked right */
             .hero-bar { flex-wrap: nowrap; align-items: flex-start; }
-            .top-nav { flex-direction: column; align-items: flex-end; gap: 10px; }
-            .mitmachen-btn { order: 1; }
-            .loc-area { min-width: 10ch; display: inline-block; }
+            .top-nav { flex-direction: column; align-items: stretch; gap: 10px; }
+            .mitmachen-btn { order: 1; animation-delay: 2.4s; width: 100%; box-sizing: border-box; text-align: center; }
+            .lang-switcher  { animation-delay: 1.9s; width: 100%; box-sizing: border-box; justify-content: center; }
+            .loc-area { display: inline-block; }
 
             /* 2. Hero title — larger on mobile, more padding */
-            .hero { min-height: auto; justify-content: flex-start; padding: 180px 40px 140px; gap: 40px; }
-            .hero-title { font-size: clamp(48px, 14vw, 180px); }
+            .hero { min-height: auto; justify-content: flex-start; padding: 180px 24px 140px; gap: 40px; }
+            .hero-title { font-size: clamp(56px, 16vw, 180px); }
             .mobile-br { display: initial; }
             .hero-description { font-size: 19px; }
 
